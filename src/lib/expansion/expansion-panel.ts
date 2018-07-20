@@ -26,12 +26,14 @@ import {
   SkipSelf,
   ViewContainerRef,
   ViewEncapsulation,
+  Inject,
 } from '@angular/core';
 import {Subject} from 'rxjs';
 import {filter, startWith, take} from 'rxjs/operators';
 import {MatAccordion} from './accordion';
 import {matExpansionAnimations} from './expansion-animations';
 import {MatExpansionPanelContent} from './expansion-panel-content';
+import {ANIMATION_MODULE_TYPE} from '@angular/platform-browser/animations';
 
 
 /** MatExpansionPanel's states. */
@@ -66,6 +68,7 @@ let uniqueId = 0;
     'class': 'mat-expansion-panel',
     '[class.mat-expanded]': 'expanded',
     '[class.mat-expansion-panel-spacing]': '_hasSpacing()',
+    '[class._mat-animation-noopable]': `_animationMode === 'NoopAnimations'`,
   }
 })
 export class MatExpansionPanel extends CdkAccordionItem
@@ -96,7 +99,8 @@ export class MatExpansionPanel extends CdkAccordionItem
   constructor(@Optional() @SkipSelf() accordion: MatAccordion,
               _changeDetectorRef: ChangeDetectorRef,
               _uniqueSelectionDispatcher: UniqueSelectionDispatcher,
-              private _viewContainerRef: ViewContainerRef) {
+              private _viewContainerRef: ViewContainerRef,
+              @Optional() @Inject(ANIMATION_MODULE_TYPE) public _animationMode?: string) {
     super(accordion, _changeDetectorRef, _uniqueSelectionDispatcher);
     this.accordion = accordion;
   }

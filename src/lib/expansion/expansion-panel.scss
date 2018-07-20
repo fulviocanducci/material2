@@ -1,10 +1,11 @@
 @import '../core/style/variables';
 @import '../core/style/elevation';
+@import '../core/style/noop-animation';
 @import '../../cdk/a11y/a11y';
 
 .mat-expansion-panel {
-  @include mat-elevation-transition;
   @include mat-overridable-elevation(2);
+  @include _noop-animation();
   box-sizing: content-box;
   display: block;
   margin: 0;
